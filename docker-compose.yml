@@ -1,8 +1,23 @@
-version: '3.3'
+version: "3"
+
 services:
-  node-docker:
+  api-server:
     build:
       context: .
-      dockerfile: Dockerfile
+    container_name: api-server
+    image: api-server
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGO_URL=mongodb://host.docker.internal:27017/books
+    volumes:
+      - ./logs:/logs
+    networks:
+      - app-network
     ports:
-      - "4040:4040"
+      - "3000:3000"
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,22 +1,31 @@
-#### Author : https://github.com/eaccmk ###
+FROM node:20.11.1-alpine as base
 
-# Use and install node v20 first [ April 2024]
-FROM node:20
+# Add package file
+COPY package.json ./
+COPY yarn.lock ./
+COPY scripts/dev.sh ./scripts/dev.sh
 
-# Create app directory
-WORKDIR /usr/src/app
+# Install deps
+RUN yarn install
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+# Copy source
+COPY src ./src
+COPY tsconfig.json ./tsconfig.json
+COPY openapi.yml ./openapi.yml
 
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
+# Build dist
+RUN yarn build
 
-# Bundle app source
-COPY . .
+# Start production image build
+FROM node:20.11.1-alpine
 
-EXPOSE 4040
-CMD [ "node", "app.js", "--host", "0.0.0.0" ]
+# Copy node modules and build directory
+COPY --from=base ./node_modules ./node_modules
+COPY --from=base /dist /dist
+
+# Copy static files
+COPY src/public dist/src/public
+
+# Expose port 3000
+EXPOSE 3000
+CMD ["dist/src/server.js"]

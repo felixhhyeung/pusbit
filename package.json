@@ -1,25 +1,72 @@
 {
-  "name": "node-app-http-docker",
-  "version": "0.0.2",
-  "description": "Dev Docker instance / image running a NodeJS server.",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "express-typescript-boilerplate",
+  "version": "1.0.0",
+  "description": "A minimalist TypeScript-Express boilerplate",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sidhantpanda/express-typescript-boilerplate.git"
   },
   "keywords": [
-    "docker",
+    "TypeScript",
+    "express",
     "nodejs",
-    "sample",
-    "example",
-    "server",
-    "js",
-    "api-testing",
-    "javascript",
-    "local",
-    "localhost",
-    "8080"
+    "boilerplate",
+    "eslint"
   ],
-  "author": "Millan Kaul (eaccmk)",
-  "homepage":"https://github.com/eaccmk/node-app-http-docker#readme",
-  "license": "ISC"
+  "author": "Sidhant Panda",
+  "main": "dist/index.js",
+  "scripts": {
+    "eslint": "eslint src/server.ts",
+    "postinstall": "chmod +x ./scripts/dev.sh",
+    "setup-actions": "chmod +x ./scripts/setup-github-actions.sh; ./scripts/setup-github-actions.sh",
+    "build": "tsc",
+    "lint": "./node_modules/eslint/bin/eslint.js  src --ext .ts",
+    "dev": "yarn dev-server",
+    "dev-server": "NODE_ENV=development nodemon",
+    "ts-node-server": "ts-node src/server.ts",
+    "start": "node dist/src/server.js",
+    "test": "jest",
+    "fix-lint": "./node_modules/eslint/bin/eslint.js  src --ext .ts --fix"
+  },
+  "dependencies": {
+    "body-parser": "1.20.2",
+    "compression": "1.7.4",
+    "dayjs": "^1.11.11",
+    "dotenv": "16.4.5",
+    "express": "4.18.3",
+    "joi": "17.12.2",
+    "js-yaml": "^4.1.0",
+    "mongoose": "8.2.2",
+    "mysql2": "^3.9.7",
+    "swagger-ui-express": "5.0.0",
+    "winston": "3.12.0",
+    "winston-transport": "4.7.0"
+  },
+  "devDependencies": {
+    "@types/compression": "1.7.5",
+    "@types/express": "4.17.21",
+    "@types/hapi__joi": "17.1.14",
+    "@types/jest": "29.5.12",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "20.11.30",
+    "@types/supertest": "6.0.2",
+    "@types/swagger-ui-express": "4.1.6",
+    "@typescript-eslint/eslint-plugin": "7.3.1",
+    "@typescript-eslint/parser": "7.3.1",
+    "eslint": "8.57.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-plugin-import": "2.29.1",
+    "jest": "29.7.0",
+    "jest-express": "1.12.0",
+    "nodemon": "3.1.0",
+    "supertest": "6.3.4",
+    "ts-jest": "29.1.2",
+    "ts-node": "10.9.2",
+    "typescript": "5.4.2"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sidhantpanda/docker-express-typescript-boilerplate/issues"
+  },
+  "homepage": "https://github.com/sidhantpanda/docker-express-typescript-boilerplate#readme"
 }
