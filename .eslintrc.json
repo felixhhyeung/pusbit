@@ -11,6 +11,7 @@
   },
   "rules": {
     "max-len": 1,
+    "linebreak-style": 0,
     "import/extensions": [
       0,
       "never",
