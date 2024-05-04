@@ -5,9 +5,7 @@
     ".git",
     "node_modules"
   ],
-  "watch": [
-    "src"
-  ],
+  "watch": ["src"],
   "exec": "yarn eslint && yarn ts-node-server",
-  "ext": "ts"
+  "ext": "js, json, ts, proto"
 }

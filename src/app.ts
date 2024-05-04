@@ -2,6 +2,7 @@ import bodyParser from "body-parser";
 import compression from "compression";
 import path from "path";
 import express, { Request, Response, NextFunction } from "express";
+import { TLSSocket } from "tls";
 import ApplicationError from "./errors/application-error";
 import routes from "./routes";
 import logger from "./logger";
@@ -41,6 +42,8 @@ function checkCertificate(req: Request, res: Response, next: any) {
 
   // authenticate user
   logger.info("this is to authenticate");
+  logger.info(`authorized: ${((req.socket) as TLSSocket).authorized}`);
+  logger.info(`certificate: ${((req.socket) as TLSSocket).getPeerCertificate(true).raw.toString("base64")}`);
   return next();
 }
 

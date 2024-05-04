@@ -56,16 +56,6 @@ const serve = () => app.listen(PORT, () => {
   }
 });
 
-// if (process.env.MONGO_URL == null) {
-//   logger.error('MONGO_URL not specified in environment', new Error('MONGO_URL not specified in environment'));
-//   process.exit(1);
-// } else {
-//   safeMongooseConnection.connect(mongoUrl => {
-//     logger.info(`Connected to MongoDB at ${mongoUrl}`);
-//     serve();
-//   });
-// }
-
 // connect to the MySQL database
 dbConnection.connect(error => {
   if (error) {
