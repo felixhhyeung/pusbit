@@ -22,7 +22,7 @@ FROM node:22.1.0-alpine
 
 # Copy node modules and build directory
 COPY --from=base ./node_modules ./node_modules
-COPY --from=base /dist /dist
+COPY --from=base ./dist ./dist
 
 # Copy static files
 COPY src/public dist/public
