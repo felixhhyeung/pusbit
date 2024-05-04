@@ -1,4 +1,4 @@
-FROM node:20.11.1-alpine as base
+FROM node:22.1.0-alpine as base
 
 # Add package file
 COPY package.json ./
@@ -17,14 +17,14 @@ COPY openapi.yml ./openapi.yml
 RUN yarn build
 
 # Start production image build
-FROM node:20.11.1-alpine
+FROM node:22.1.0-alpine
 
 # Copy node modules and build directory
 COPY --from=base ./node_modules ./node_modules
 COPY --from=base /dist /dist
 
 # Copy static files
-COPY src/public dist/src/public
+COPY src/public dist/public
 
 # Expose port 3000
 EXPOSE 3000
