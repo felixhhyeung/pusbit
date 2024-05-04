@@ -25,7 +25,7 @@
     "dev-server": "NODE_ENV=development nodemon -L",
     "dev-server-comment": "// -L: --legacy-watch, inotify is not fully supported in the 9P filesystem protocol on WSL2 https://stackoverflow.com/questions/63402588/how-can-nodemon-be-made-to-work-with-wsl-2",
     "ts-node-server": "ts-node src/server.ts",
-    "start": "node dist/src/server.js",
+    "start": "node dist/server.js",
     "test": "jest",
     "fix-lint": "./node_modules/eslint/bin/eslint.js  src --ext .ts --fix"
   },
