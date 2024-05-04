@@ -12,6 +12,7 @@ RUN yarn install
 COPY src ./src
 COPY tsconfig.json ./tsconfig.json
 COPY openapi.yml ./openapi.yml
+COPY .env .efffnv
 
 # Build dist
 RUN yarn build
@@ -28,4 +29,4 @@ COPY src/public dist/public
 
 # Expose port 3000
 EXPOSE 3000
-CMD ["dist/src/server.js"]
+CMD ["dist/server.js"]

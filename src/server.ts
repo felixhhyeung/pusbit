@@ -39,6 +39,13 @@ if (process.env.NODE_ENV === "development") {
 // });
 
 // create a new MySQL connection
+logger.info(`dbConnection(): ${JSON.stringify({
+  host: process.env.DB_URL,
+  port: Number(process.env.DB_PORT),
+  user: "root",
+  password: "[secret]",
+  database: "moon"
+})}`);
 const dbConnection = mysql.createConnection({
   host: process.env.DB_URL,
   port: Number(process.env.DB_PORT),
