@@ -4,7 +4,7 @@ import yaml from "js-yaml";
 import fs from "fs";
 import path from "path";
 
-import * as BookController from "./controllers/book";
+// import * as BookController from "./controllers/book";
 import * as UtilityController from "./controllers/utility";
 
 const swaggerUiOptions = {
@@ -20,11 +20,11 @@ router.get("/health", UtilityController.health);
 router.put("/alive", UtilityController.alive);
 
 // Book routes
-router.post("/book/add", BookController.add);
-router.get("/book/all", BookController.all);
-router.get("/book/search", BookController.search);
-router.get("/book/id/:bookId", BookController.get);
-router.delete("/book/id/:bookId", BookController.remove);
+// router.post("/book/add", BookController.add);
+// router.get("/book/all", BookController.all);
+// router.get("/book/search", BookController.search);
+// router.get("/book/id/:bookId", BookController.get);
+// router.delete("/book/id/:bookId", BookController.remove);
 
 // Dev routes
 if (process.env.NODE_ENV === "development") {

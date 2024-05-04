@@ -9,7 +9,7 @@ if (result.error) {
 import util from "util";
 import mysql from "mysql2";
 import app from "./app";
-import SafeMongooseConnection from "./lib/safe-mongoose-connection";
+// import SafeMongooseConnection from "./lib/safe-mongoose-connection";
 import logger from "./logger";
 
 const PORT = process.env.PORT || 3000;
@@ -26,17 +26,17 @@ if (process.env.NODE_ENV === "development") {
   };
 }
 
-const safeMongooseConnection = new SafeMongooseConnection({
-  mongoUrl: process.env.MONGO_URL ?? "",
-  debugCallback,
-  onStartConnection: mongoUrl => logger.info(`Connecting to MongoDB at ${mongoUrl}`),
-  onConnectionError: (error, mongoUrl) => logger.log({
-    level: "error",
-    message: `Could not connect to MongoDB at ${mongoUrl}`,
-    error
-  }),
-  onConnectionRetry: mongoUrl => logger.info(`Retrying to MongoDB at ${mongoUrl}`)
-});
+// const safeMongooseConnection = new SafeMongooseConnection({
+//   mongoUrl: process.env.MONGO_URL ?? "",
+//   debugCallback,
+//   onStartConnection: mongoUrl => logger.info(`Connecting to MongoDB at ${mongoUrl}`),
+//   onConnectionError: (error, mongoUrl) => logger.log({
+//     level: "error",
+//     message: `Could not connect to MongoDB at ${mongoUrl}`,
+//     error
+//   }),
+//   onConnectionRetry: mongoUrl => logger.info(`Retrying to MongoDB at ${mongoUrl}`)
+// });
 
 // create a new MySQL connection
 const dbConnection = mysql.createConnection({
