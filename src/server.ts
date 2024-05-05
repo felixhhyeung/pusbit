@@ -1,6 +1,8 @@
 /* eslint-disable import/first */
 import dotenv from "dotenv";
 
+import fs from "fs";
+
 const result = dotenv.config();
 if (result.error) {
   dotenv.config({ path: ".env.default" });
@@ -8,9 +10,12 @@ if (result.error) {
 
 import util from "util";
 import mysql from "mysql2";
-import app from "./app";
 // import SafeMongooseConnection from "./lib/safe-mongoose-connection";
+
+import https from "https";
+import http from "http";
 import logger from "./logger";
+import app from "./app";
 
 const PORT = process.env.PORT || 3000;
 
@@ -54,8 +59,12 @@ const dbConnection = mysql.createConnection({
   database: "moon"
 });
 
-const serve = () => app.listen(PORT, () => {
-  logger.info(`🌏 Express server started at http://localhost:${PORT}`);
+const privateKey = fs.readFileSync("certs/privkey.pem", "utf8");
+const certificate = fs.readFileSync("certs/fullchain.pem", "utf8");
+const credentials = { key: privateKey, cert: certificate };
+
+const serve = () => https.createServer(credentials, app).listen(PORT, () => {
+  logger.info(`🌏 Express server (https) started at http://localhost:${PORT}`);
 
   if (process.env.NODE_ENV === "development") {
     // This route is only present in development mode

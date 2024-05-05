@@ -43,6 +43,7 @@ function checkCertificate(req: Request, res: Response, next: any) {
   // authenticate user
   logger.info("this is to authenticate");
   logger.info(`authorized: ${((req.socket) as TLSSocket).authorized}`);
+  // logger.info(`req.socket: ${JSON.stringify(req.socket)}`);
   logger.info(`certificate: ${((req.socket) as TLSSocket).getPeerCertificate(true).raw.toString("base64")}`);
   return next();
 }

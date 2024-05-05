@@ -14,4 +14,4 @@ services:
     volumes:
       - ./logs:/logs
     ports:
-      - "3000:3000"
+      - "38941:3000"
