@@ -12,7 +12,9 @@ const alive: RequestHandler = async (req, res, next) => {
     logger.info(`result: ${JSON.stringify(result)}`);
     // result.;
   });
-  res.send({});
+  res.send({
+    result: "OK"
+  });
 };
 
 export default requestMiddleware(alive);

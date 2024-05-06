@@ -6,6 +6,7 @@ import { TLSSocket } from "tls";
 import ApplicationError from "./errors/application-error";
 import routes from "./routes";
 import logger from "./logger";
+import { dbConnection } from "./server";
 
 const app = express();
 
@@ -40,12 +41,16 @@ app.use(
 function checkCertificate(req: Request, res: Response, next: any) {
   if (req.path === "/health") return next();
 
-  // authenticate user
-  logger.info("this is to authenticate");
-  logger.info(`authorized: ${((req.socket) as TLSSocket).authorized}`);
-  // logger.info(`req.socket: ${JSON.stringify(req.socket)}`);
-  logger.info(`certificate: ${((req.socket) as TLSSocket).getPeerCertificate(true).raw.toString("base64")}`);
-  return next();
+  dbConnection.query("SELECT AUTHORIZATION_KEY FROM USER WHERE NAME = 'me'", (err, result) => {
+    if (err) throw err;
+    logger.info(`result: ${JSON.stringify(result)}`);
+    // logger.info(`fields: ${JSON.stringify(fields)}`);
+    const token = req.headers.authorization?.split(" ")[1];
+    logger.info(`token: ${token}`);
+    logger.info(`result[0 as keyof typeof result]["AUTHORIZATION_KEY" as keyof typeof result]: ${result[0 as keyof typeof result]["AUTHORIZATION_KEY" as keyof typeof result]}`);
+    if (result[0 as keyof typeof result]["AUTHORIZATION_KEY" as keyof typeof result] !== token) return res.status(404).end();
+    return next();
+  });
 }
 
 app.all("*", checkCertificate);
