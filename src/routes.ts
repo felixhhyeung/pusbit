@@ -3,6 +3,7 @@ import swaggerUi from "swagger-ui-express";
 import yaml from "js-yaml";
 import fs from "fs";
 import path from "path";
+import oAuthFlowRoutes from "./routes/oauth-flow";
 
 // import * as BookController from "./controllers/book";
 import * as UtilityController from "./controllers/utility";
@@ -16,6 +17,8 @@ const router = Router();
 const SWAGGER_YAML_FILEPATH = path.join(__dirname, "../openapi.yml");
 
 router.get("/health", UtilityController.health);
+
+router.use("/oauth", oAuthFlowRoutes);
 
 router.put("/alive", UtilityController.alive);
 

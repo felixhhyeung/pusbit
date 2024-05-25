@@ -1,6 +1,6 @@
-import { Request, RequestHandler } from 'express';
-import Joi from 'joi';
-import requestMiddleware from '../../middleware/request-middleware';
+import { Request, RequestHandler } from "express";
+import Joi from "joi";
+import requestMiddleware from "../../middleware/request-middleware";
 
 export const addBookSchema = Joi.object().keys({
   name: Joi.string().required(),
@@ -13,10 +13,7 @@ interface AddReqBody {
 }
 
 const health: RequestHandler = async (req: Request<{}, {}, AddReqBody>, res) => {
-
-  res.send({
-    result: 'OK',
-  });
+  res.send("OK");
 };
 
 export default requestMiddleware(health);

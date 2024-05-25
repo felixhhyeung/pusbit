@@ -1,5 +1,5 @@
-import health from './health';
-import alive from './alive';
+import health from "./health";
+import alive from "./alive";
 
 export {
   health,
