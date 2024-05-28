@@ -41,37 +41,38 @@ app.use(
 function checkCertificate(req: Request, res: Response, next: any) {
   if (req.path === "/health") return next();
 
-  dbConnection.query("SELECT AUTHORIZATION_KEY FROM USER WHERE NAME = 'me'", (err, result) => {
-    if (err) throw err;
-    logger.info(`result: ${JSON.stringify(result)}`);
-    // logger.info(`fields: ${JSON.stringify(fields)}`);
-    const token = req.headers.authorization?.split(" ")[1];
-    logger.info(`token: ${token}`);
-    logger.info(`result[0 as keyof typeof result]["AUTHORIZATION_KEY" as keyof typeof result]: ${result[0 as keyof typeof result]["AUTHORIZATION_KEY" as keyof typeof result]}`);
-    if (result[0 as keyof typeof result]["AUTHORIZATION_KEY" as keyof typeof result] !== token) return res.status(404).end();
-    return next();
-  });
+  // dbConnection.query("SELECT AUTHORIZATION_KEY FROM USER WHERE NAME = 'me'", (err, result) => {
+  //   if (err) throw err;
+  //   logger.info(`result: ${JSON.stringify(result)}`);
+  //   // logger.info(`fields: ${JSON.stringify(fields)}`);
+  //   const token = req.headers.authorization?.split(" ")[1];
+  //   logger.info(`token: ${token}`);
+  //   logger.info(`result[0 as keyof typeof result]["AUTHORIZATION_KEY" as keyof typeof result]: ${result[0 as keyof typeof result]["AUTHORIZATION_KEY" as keyof typeof result]}`);
+  //   if (result[0 as keyof typeof result]["AUTHORIZATION_KEY" as keyof typeof result] !== token) return res.status(404).end();
+  //   return next();
+  // });
+  return next();
 }
 
 app.all("*", checkCertificate);
 
 app.use(routes);
 
-app.use(
-  (
-    err: ApplicationError,
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    if (res.headersSent) {
-      return next(err);
+function errorHandler(
+  err: ApplicationError,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  res.status(err.status || 500);
+  res.send({
+    err: {
+      message: err.message
     }
+  });
+}
 
-    return res.status(err.status || 500).json({
-      error: err.message
-    });
-  }
-);
+// Error-handling middleware
+app.use(errorHandler);
 
 export default app;

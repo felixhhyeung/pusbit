@@ -1,12 +1,10 @@
 import express from "express";
-import {
-  authorize, token, authenticate, test
-} from "../services/oauth2.service";
+import * as Oauth2Service from "../controllers/oauth2";
 
 const router = express.Router();
 
-router.get("/authorize", authorize);
-router.post("/token", token);
-router.get("/authenticate", authenticate, test);
+router.get("/authorize", Oauth2Service.authorize);
+// router.post("/token", Oauth2Service.token);
+// router.get("/authenticate", Oauth2Service.authenticate, Oauth2Service.test);
 
 export default router;

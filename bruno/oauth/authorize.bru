@@ -1,0 +1,15 @@
+meta {
+  name: authorize
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{pusbitBaseUrl}}/oauth/authorize?clientId=asdfasdf
+  body: none
+  auth: none
+}
+
+query {
+  clientId: asdfasdf
+}
