@@ -34,10 +34,12 @@
     "compression": "1.7.4",
     "dayjs": "^1.11.11",
     "dotenv": "16.4.5",
-    "express": "^5",
+    "express": "^4.19.2",
     "joi": "17.12.2",
     "js-yaml": "^4.1.0",
     "mysql2": "^3.9.7",
+    "mysql2-promise": "^0.1.4",
+    "promise-mysql": "^5.2.0",
     "swagger-ui-express": "5.0.0",
     "winston": "3.12.0",
     "winston-transport": "4.7.0"

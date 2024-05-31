@@ -24,15 +24,16 @@ export default requestMiddleware(alive);
 const authorize: RequestHandler = async (req, res, next) => {
   // Present in Flow 1 and Flow 2 ('client_id' is a required for /oauth/authorize
   const { clientId } = req.query || {};
-  if (!clientId) throw new Error("Client ID not found");
+  if (!clientId) next(new Error("Client ID not found"));
   dbConnection.query(`SELECT * FROM CLIENT WHERE ID = ${clientId}`, (err, result) => {
-    if (err) throw err;
+    if (err) return next(err);
     logger.info(`result: ${JSON.stringify(result)}`);
     // result.;
     res.send({
       result: "OK"
     });
   });
+  const result = dbConnection.query(`SELECT * FROM CLIENT WHERE ID = ${clientId}`);
 
   // if (!client) throw new Error("Client not found");
   // // Only present in Flow 2 (authentication screen)

@@ -2,11 +2,9 @@ import bodyParser from "body-parser";
 import compression from "compression";
 import path from "path";
 import express, { Request, Response, NextFunction } from "express";
-import { TLSSocket } from "tls";
-import ApplicationError from "./errors/application-error";
 import routes from "./routes";
 import logger from "./logger";
-import { dbConnection } from "./server";
+import { errorHandler } from "./middleware/error-middleware";
 
 const app = express();
 
@@ -58,21 +56,6 @@ app.all("*", checkCertificate);
 
 app.use(routes);
 
-function errorHandler(
-  err: ApplicationError,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  res.status(err.status || 500);
-  res.send({
-    err: {
-      message: err.message
-    }
-  });
-}
-
-// Error-handling middleware
 app.use(errorHandler);
 
 export default app;

@@ -16,6 +16,8 @@ import https from "https";
 import http from "http";
 import logger from "./logger";
 import app from "./app";
+import { errorHandler } from "./middleware/error-middleware";
+import ApplicationError from "./errors/application-error";
 
 const PORT = process.env.PORT || 3000;
 
@@ -67,8 +69,8 @@ const serve = () => https.createServer(credentials, app).listen(PORT, () => {
   logger.info(`🌏 Express server (https) started at http://localhost:${PORT}`);
 
   if (process.env.NODE_ENV === "development") {
-    // This route is only present in development mode
-    logger.info(`⚙️  Swagger UI hosted at http://localhost:${PORT}/dev/api-docs`);
+    // // This route is only present in development mode
+    // logger.info(`⚙️  Swagger UI hosted at http://localhost:${PORT}/dev/api-docs`);
   }
 });
 
@@ -82,21 +84,23 @@ dbConnection.connect(error => {
   }
 });
 
+process.on("uncaughtException", err => errorHandler(err));
+
 // Close the Mongoose connection, when receiving SIGINT
 process.on("SIGINT", async () => {
   console.log('\n'); /* eslint-disable-line */
   logger.info("Gracefully shutting down");
-  logger.info("Closing the MongoDB connection");
-  try {
-    await dbConnection.destroy();
-    logger.info("MySQL connection closed successfully");
-  } catch (err) {
-    logger.log({
-      level: "error",
-      message: "Error shutting closing MySQL connection",
-      error: err
-    });
-  }
+  // logger.info("Closing the MySQL connection");
+  // try {
+  //   await dbConnection.destroy();
+  //   logger.info("MySQL connection closed successfully");
+  // } catch (err) {
+  //   logger.log({
+  //     level: "error",
+  //     message: "Error shutting closing MySQL connection",
+  //     error: err
+  //   });
+  // }
   process.exit(0);
 });
 
