@@ -25,7 +25,7 @@ const authorize: RequestHandler = async (req, res, next) => {
   // Present in Flow 1 and Flow 2 ('client_id' is a required for /oauth/authorize
   const { clientId } = req.query || {};
   if (!clientId) next(new Error("Client ID not found"));
-  dbConnection.query(`SELECT * FROM CLIENT WHERE ID = ${clientId}`, (err, result) => {
+  dbConnection.query(`SELECT * FROM USER WHERE ID = ${clientId}`, (err, result) => {
     if (err) return next(err);
     logger.info(`result: ${JSON.stringify(result)}`);
     // result.;
@@ -33,7 +33,7 @@ const authorize: RequestHandler = async (req, res, next) => {
       result: "OK"
     });
   });
-  const result = dbConnection.query(`SELECT * FROM CLIENT WHERE ID = ${clientId}`);
+  const result = dbConnection.query(`SELECT * FROM USER WHERE ID = ${clientId}`);
 
   // if (!client) throw new Error("Client not found");
   // // Only present in Flow 2 (authentication screen)
