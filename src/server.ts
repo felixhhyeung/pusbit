@@ -66,7 +66,7 @@ const certificate = fs.readFileSync("certs/fullchain.pem", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 
 const serve = () => https.createServer(credentials, app).listen(PORT, () => {
-  logger.info(`🌏 Express server (https) started at http://localhost:${PORT}`);
+  logger.info(`🌏 Express server (https) started at https://localhost:${PORT}`);
 
   if (process.env.NODE_ENV === "development") {
     // // This route is only present in development mode
